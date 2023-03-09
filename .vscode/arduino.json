@@ -1,6 +1,7 @@
 {
-    "sketch": "StartSequence.ino",
+    "sketch": "StartSequence\\StartSequence.ino",
     "output": "build",
     "configuration": "FlashFreq=80,UploadSpeed=921600,DebugLevel=none,EraseFlash=none",
-    "board": "esp32:esp32:esp32doit-espduino"
+    "board": "esp32:esp32:esp32doit-espduino",
+    "port": "COM3"
 }
