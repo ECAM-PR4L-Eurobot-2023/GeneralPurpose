@@ -27,6 +27,7 @@ typedef struct {
     void (*on_set_pid_right_wheel)(const msgs::PidParameters&) {NULL};
     void (*on_set_pid_position_sub)(const msgs::PidParameters&) {NULL};
     void (*on_set_pid_rotation_sub)(const msgs::PidParameters&) {NULL};
+    void (*on_set_display_score)(const std_msgs::Int16&) {NULL};
 } RosApiCallbacks;
 
 class RosApi {
@@ -56,6 +57,7 @@ class RosApi {
     ros::Subscriber<msgs::PidParameters> set_pid_right_wheel_sub;
     ros::Subscriber<msgs::PidParameters> set_pid_position_sub;
     ros::Subscriber<msgs::PidParameters> set_pid_rotation_sub;
+    ros::Subscriber<std_msgs::Int16> set_display_score_sub;
 
 public:
     RosApi(RosApiCallbacks *, long=DEFAULT_BAUDRATE);

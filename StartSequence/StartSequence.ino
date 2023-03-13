@@ -11,9 +11,9 @@
 
 
 
-#define potar 34
+#define potar 36
 
-#define startCord
+#define startCord 32
 
 Screen screen;
 
@@ -26,20 +26,41 @@ boolean drawn = false;
 
 StartPlateSelector startPlateSelector(potar);
 
-void setup(void) {
-    screen.begin();
-    startPlateSelector.begin();
-    Serial.begin(115200);
+void display_score_callback(const std_msgs::Int16& msg) {
+    screen.draw(msg.data);
 }
 
-void loop(void) {
-    count = startPlateSelector.getPlateNumber();
-    if(prevCount != count){
-        drawn = false;
-        prevCount = count;
-    }
+void startSequence(){
+  count = startPlateSelector.getPlateNumber();
+  if(prevCount != count){
+      drawn = false;
+      prevCount = count;
+  }
 
   if(!drawn){
     screen.draw(count);
   }
+      delay(10);
+}
+
+void setup(void) {
+    callbacks.on_set_display_score = display_score_callback;
+    rosApi = new RosApi(&callbacks);
+    rosApi->begin();
+    screen.begin();
+    startPlateSelector.begin();
+    // Serial.begin(115200);
+    pinMode(startCord, INPUT);
+    rosApi->run();
+    rosApi->pub_distance_reached();
+    while(!digitalRead(startCord)){
+      startSequence();
+    }
+     
+    rosApi->pub_set_start_plate(count);
+}
+
+void loop(void) {
+  rosApi->run();
+  delay(25);
 }
