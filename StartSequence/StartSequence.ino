@@ -23,6 +23,7 @@ RosApi *rosApi;
 int count = 0;
 int prevCount = 0;
 boolean drawn = false;
+bool first = true;
 
 StartPlateSelector startPlateSelector(potar);
 
@@ -51,16 +52,25 @@ void setup(void) {
     startPlateSelector.begin();
     // Serial.begin(115200);
     pinMode(startCord, INPUT);
-    rosApi->run();
-    rosApi->pub_distance_reached();
-    while(!digitalRead(startCord)){
-      startSequence();
-    }
-     
-    rosApi->pub_set_start_plate(count);
 }
 
 void loop(void) {
   rosApi->run();
+  // Serial.println(digitalRead(startCord));
+  if(first){
+    
+
+    while(digitalRead(startCord)){
+      rosApi->run();
+      startSequence();
+      Serial.println("Waiting");
+    }
+    Serial.println("Received");
+    first= false;
+    rosApi->pub_distance_reached();
+    rosApi->pub_set_start_plate(count);
+    
+  }
+
   delay(25);
 }
