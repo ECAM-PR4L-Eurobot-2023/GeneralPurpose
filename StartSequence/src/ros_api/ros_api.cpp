@@ -16,7 +16,9 @@ RosApi::RosApi(RosApiCallbacks *callbacks, long baudrate) :
     set_pid_right_wheel_sub(TOPIC_SET_PID_RIGHT_WHEEL, callbacks->on_set_pid_right_wheel),
     set_pid_position_sub(TOPIC_SET_PID_POSITION, callbacks->on_set_pid_position_sub),
     set_pid_rotation_sub(TOPIC_SET_PID_ANGLE, callbacks->on_set_pid_rotation_sub),
-    set_display_score_sub(TOPIC_SET_DISPLAY_SCORE,callbacks->on_set_display_score) {}
+    set_display_score_sub(TOPIC_SET_DISPLAY_SCORE,callbacks->on_set_display_score),
+    start_fan_sub(TOPIC_FAN_ON,callbacks->on_start_fan),
+    stop_fan_sub(TOPIC_FAN_OFF, callbacks->on_stop_fan) {}
 
 
 void RosApi::begin(void) {
@@ -42,6 +44,8 @@ void RosApi::begin(void) {
     nh.subscribe(set_pid_position_sub);
     nh.subscribe(set_pid_rotation_sub);
     nh.subscribe(set_display_score_sub);
+    nh.subscribe(start_fan_sub);
+    nh.subscribe(stop_fan_sub);
 }
 
 void RosApi::run(void) {

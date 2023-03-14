@@ -19,5 +19,7 @@
 #define TOPIC_GET_PID_ANGLE         "/robot/pid/angle/get"
 #define TOPIC_SET_START_PLATE       "/robot/startPlate/set"
 #define TOPIC_SET_DISPLAY_SCORE     "/robot/display/set"
+#define TOPIC_FAN_ON                "/robot/fan/on"
+#define TOPIC_FAN_OFF               "/robot/fan/off"
 
 #endif /* TOPIC_H */
