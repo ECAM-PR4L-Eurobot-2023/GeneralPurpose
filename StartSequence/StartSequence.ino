@@ -89,18 +89,32 @@ void setup(void) {
 }
 
 void loop(void) {
-  rosApi->run();
-  if(first){
-    while(digitalRead(startCord)){
-      rosApi->run();
-      startSequence();
-      Serial.println("Waiting");
-    }
-    Serial.println("Received");
-    first = false;
-    rosApi->pub_distance_reached();
-    rosApi->pub_set_start_plate(count);
-  }
+  // rosApi->run();
+  // if(first){
+  //   while(digitalRead(startCord)){
+  //     rosApi->run();
+  //     startSequence();
+  //     Serial.println("Waiting");
+  //   }
+  //   Serial.println("Received");
+  //   first = false;
+  //   rosApi->pub_distance_reached();
+  //   rosApi->pub_set_start_plate(count);
+  // }
+//   for( int i = 0; i++; i<180){
+// servoLeft.write(i);
+//   delay(25);
+//   }
+
+  servoLeft.write(0);
+  delay(1000);
+  servoLeft.write(45);
+  delay(1000);
+  servoLeft.write(90);
+  delay(1000);
+  servoLeft.write(180);
+  delay(1000);
+  
 
   delay(25);
 }
