@@ -21,7 +21,7 @@
 #define startCord 32
 
 #define SERVO_LEFT_PIN 25  //placeholder
-#define SERVO_RIGHT_PIN 26  //placeholder
+#define SERVO_RIGHT_PIN 33  //placeholder
 
 #define FAN_PIN 27 //placeholder
 
@@ -42,11 +42,11 @@ StartPlateSelector startPlateSelector(potar);
 
 void turn_on_fan_callback(const std_msgs::Int16& msg){
   if(msg.data == 1){
-    servoLeft.write(180);
-    servoRight.write(0);
-  }else{
     servoLeft.write(0);
     servoRight.write(180);
+  }else{
+    servoLeft.write(90);
+    servoRight.write(0);
   }
   digitalWrite(FAN_PIN, HIGH);
 }
@@ -86,6 +86,8 @@ void setup(void) {
 
     servoLeft.attach(SERVO_LEFT_PIN);
     servoRight.attach(SERVO_RIGHT_PIN);
+    servoLeft.write(180);
+    servoRight.write(0);
 }
 
 void loop(void) {
@@ -104,17 +106,9 @@ void loop(void) {
 //   for( int i = 0; i++; i<180){
 // servoLeft.write(i);
 //   delay(25);
+
 //   }
 
-  servoLeft.write(0);
-  delay(1000);
-  servoLeft.write(45);
-  delay(1000);
-  servoLeft.write(90);
-  delay(1000);
-  servoLeft.write(180);
-  delay(1000);
-  
 
-  delay(25);
+
 }
