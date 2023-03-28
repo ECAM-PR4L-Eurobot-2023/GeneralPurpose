@@ -103,12 +103,29 @@ void loop(void) {
   //   rosApi->pub_distance_reached();
   //   rosApi->pub_set_start_plate(count);
   // }
-//   for( int i = 0; i++; i<180){
-// servoLeft.write(i);
-//   delay(25);
+  // std_msgs::Int16 mess = std_msgs::Int16();
+  // mess.data = 1;
+  // delay(2000);
+  // turn_on_fan_callback(mess);
+  //   delay(2000);
+  // turn_off_fan_callback(std_msgs::Empty());
+  //   delay(2000);
+  //   mess.data = 0;
+  // turn_on_fan_callback(mess);
+  
 
-//   }
 
 
+// servoLeft.write(90);
+//     servoRight.write(0);
+//     delay(2000);
+//         servoLeft.write(0);
+//     servoRight.write(180);
+servoLeft.write(0);
+servoRight.write(0);
+// delay(2000);
+// servoLeft.write(10);
+// servoRight.write(10);
+// delay(2000);
 
 }
