@@ -21,5 +21,6 @@
 #define TOPIC_SET_DISPLAY_SCORE     "/robot/display/set"
 #define TOPIC_FAN_ON                "/robot/fan/on"
 #define TOPIC_FAN_OFF               "/robot/fan/off"
+#define TOPIC_START                 "/robot/start"
 
 #endif /* TOPIC_H */

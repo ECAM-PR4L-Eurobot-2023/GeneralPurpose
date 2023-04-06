@@ -42,12 +42,14 @@ class RosApi {
     std_msgs::Int16 urgency_stop_msg;
     std_msgs::Int16 set_start_plate_msg;
     msgs::Displacement data_all_msg;
+    std_msgs::Empty start_msg;
 
     // Publishers
     ros::Publisher distance_reached_pub;
     ros::Publisher urgency_stop_pub;
     ros::Publisher data_all_pub;
     ros::Publisher set_start_plate_pub;
+    ros::Publisher send_start_pub;
 
     // Subscribers
     ros::Subscriber<msgs::Displacement> set_displacement_sub;
@@ -72,6 +74,7 @@ public:
     void pub_urgency_stop(int);
     void pub_data_all(data::Displacement);
     void pub_set_start_plate(int);
+    void pub_send_start(void);
 };
 
 #endif /* ROS_API_H */

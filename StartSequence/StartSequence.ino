@@ -117,7 +117,7 @@ void setup(void)
       rosApi->pub_set_start_plate(count);
     }
   }
-  rosApi->pub_set_start_plate(count);
+  rosApi->pub_send_start();
 }
 
 void loop(void)

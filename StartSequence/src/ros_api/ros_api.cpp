@@ -7,6 +7,7 @@ RosApi::RosApi(RosApiCallbacks *callbacks, long baudrate) :
     distance_reached_pub(TOPIC_DISTANCE_REACHED, &distance_reached_msg),
     urgency_stop_pub(TOPIC_URGENCY_STOP, &urgency_stop_msg),
     data_all_pub(TOPIC_DATA_ALL, &data_all_msg),
+    send_start_pub(TOPIC_START, &start_msg),
     set_displacement_sub(TOPIC_SET_DISPLACEMENT, callbacks->on_set_displacement),
     set_position_sub(TOPIC_SET_POSITION, callbacks->on_set_position),
     set_rotation_sub(TOPIC_SET_ROTATION, callbacks->on_set_rotation),
@@ -71,4 +72,8 @@ void RosApi::pub_data_all(data::Displacement displacement) {
 void RosApi::pub_set_start_plate(int start_plate) {
     set_start_plate_msg.data = (int16_t)start_plate;
     set_start_plate_pub.publish(&set_start_plate_msg);
+}
+
+void RosApi::pub_send_start(){
+    send_start_pub.publish(&start_msg);
 }
