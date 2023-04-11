@@ -8,7 +8,6 @@
 #include "src/StartPlateSelector.h"
 
 #include "src/data/displacement.h"
-#include "src/ros_api/msg/Displacement.h"
 #include "src/ros_api/ros_api.h"
 #include "src/ros_api/topics.h"
 
@@ -18,8 +17,8 @@
 
 #define startCord 32
 
-#define SERVO_LEFT_PIN 25  // placeholder
-#define SERVO_RIGHT_PIN 33 // placeholder
+#define SERVO_RIGHT_PIN 25  // placeholder
+#define SERVO_LEFT_PIN 33 // placeholder
 
 #define FAN_PIN 27 // placeholder
 
@@ -102,7 +101,7 @@ void setup(void)
   servoRight.write(0);
 
   rosApi->run();
-  Serial.println("Waitinggggggggg");
+  // Serial.println("Waitinggggggggg");
   while (!digitalRead(startCord))
   {
     rosApi->run();
