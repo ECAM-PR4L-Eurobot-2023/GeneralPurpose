@@ -11,7 +11,9 @@ RosApi::RosApi(RosApiCallbacks *callbacks, long baudrate) :
     set_distance_mm_sub(TOPIC_SET_DISTANCE_MM, callbacks->on_set_distance_mm),
     set_display_score_sub(TOPIC_SET_DISPLAY_SCORE,callbacks->on_set_display_score),
     start_fan_sub(TOPIC_FAN_ON,callbacks->on_start_fan),
-    stop_fan_sub(TOPIC_FAN_OFF, callbacks->on_stop_fan) {}
+    stop_fan_sub(TOPIC_FAN_OFF, callbacks->on_stop_fan),
+    close_door_sub(TOPIC_CLOSE_DOOR, callbacks->on_close_door),
+    open_door_sub(TOPIC_OPEN_DOOR, callbacks->on_open_door) {}
 
 
 void RosApi::begin(void) {
@@ -31,6 +33,8 @@ void RosApi::begin(void) {
     nh.subscribe(set_display_score_sub);
     nh.subscribe(start_fan_sub);
     nh.subscribe(stop_fan_sub);
+    nh.subscribe(close_door_sub);
+    nh.subscribe(open_door_sub);
 }
 
 void RosApi::run(void) {

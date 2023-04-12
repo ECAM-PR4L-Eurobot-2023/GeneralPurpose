@@ -22,6 +22,8 @@ typedef struct {
     void (*on_set_display_score)(const std_msgs::Int16&) {NULL};
     void (*on_start_fan)(const std_msgs::Int16&) {NULL};
     void (*on_stop_fan)(const std_msgs::Empty&) {NULL};
+    void (*on_close_door)(const std_msgs::Empty&) {NULL};
+    void (*on_open_door)(const std_msgs::Empty&) {NULL};
 } RosApiCallbacks;
 
 class RosApi {
@@ -47,6 +49,8 @@ class RosApi {
     ros::Subscriber<std_msgs::Int16> set_display_score_sub;
     ros::Subscriber<std_msgs::Int16> start_fan_sub;
     ros::Subscriber<std_msgs::Empty> stop_fan_sub;
+    ros::Subscriber<std_msgs::Empty> close_door_sub;
+    ros::Subscriber<std_msgs::Empty> open_door_sub;
 
 public:
     RosApi(RosApiCallbacks *, long=DEFAULT_BAUDRATE);

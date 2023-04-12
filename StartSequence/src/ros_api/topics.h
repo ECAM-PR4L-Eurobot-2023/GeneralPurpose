@@ -22,5 +22,7 @@
 #define TOPIC_FAN_ON                "/robot/fan/on"
 #define TOPIC_FAN_OFF               "/robot/fan/off"
 #define TOPIC_START                 "/robot/start"
+#define TOPIC_OPEN_DOOR             "/robot/door/open"
+#define TOPIC_CLOSE_DOOR            "/robot/door/close"
 
 #endif /* TOPIC_H */
