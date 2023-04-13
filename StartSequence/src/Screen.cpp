@@ -15,5 +15,7 @@ void Screen::draw(int count){
     char buf[4];
     sprintf(buf, "%d", count);
     display.drawStr(70-(20* ((count>9? 1: 0)+(count>99? 1: 0))),44,buf);
+    // display.drawStr(20-(20* ((count>9? 1: 0)+(count>99? 1: 0))),20,buf);
+
     display.sendBuffer();
 }

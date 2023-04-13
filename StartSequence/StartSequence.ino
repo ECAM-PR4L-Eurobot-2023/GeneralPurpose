@@ -130,8 +130,8 @@ void setup(void)
   servoDoor.write(90);
 
   rosApi->run();
-  Serial.println("Waitinggggggggg");
-  while (digitalRead(startCord))
+  // Serial.println("Waitinggggggggg");
+  while (!digitalRead(startCord))
   {
     rosApi->run();
     startSequence();
@@ -140,13 +140,13 @@ void setup(void)
     {
       while (digitalRead(sendButtonPin))
       {
-        Serial.println("inloop");
+        // Serial.println("inloop");
         delay(10);
       }
       rosApi->pub_set_start_plate(count);
     }
   }
-  Serial.println("feur");
+  // Serial.println("feur");
   rosApi->pub_send_start();
 
 }
