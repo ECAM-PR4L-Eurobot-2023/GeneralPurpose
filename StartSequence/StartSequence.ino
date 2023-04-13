@@ -131,6 +131,7 @@ void setup(void)
 
   rosApi->run();
   // Serial.println("Waitinggggggggg");
+  // Serial.println(digitalRead(startCord));
   while (!digitalRead(startCord))
   {
     rosApi->run();
