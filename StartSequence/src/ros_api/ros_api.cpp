@@ -13,7 +13,8 @@ RosApi::RosApi(RosApiCallbacks *callbacks, long baudrate) :
     start_fan_sub(TOPIC_FAN_ON,callbacks->on_start_fan),
     stop_fan_sub(TOPIC_FAN_OFF, callbacks->on_stop_fan),
     close_door_sub(TOPIC_CLOSE_DOOR, callbacks->on_close_door),
-    open_door_sub(TOPIC_OPEN_DOOR, callbacks->on_open_door) {}
+    open_door_sub(TOPIC_OPEN_DOOR, callbacks->on_open_door),
+    disguise_sub(TOPIC_DISGUISE, callbacks->on_disguise) {}
 
 
 void RosApi::begin(void) {
@@ -25,6 +26,7 @@ void RosApi::begin(void) {
     // // Advertize publishers
     nh.advertise(urgency_stop_pub);
     nh.advertise(set_start_plate_pub);
+    nh.advertise(send_start_pub);
 
     // // Subscribe
     nh.subscribe(set_rotation_sub);
@@ -35,6 +37,7 @@ void RosApi::begin(void) {
     nh.subscribe(stop_fan_sub);
     nh.subscribe(close_door_sub);
     nh.subscribe(open_door_sub);
+    nh.subscribe(disguise_sub);
 }
 
 void RosApi::run(void) {
@@ -52,6 +55,6 @@ void RosApi::pub_set_start_plate(int start_plate) {
     set_start_plate_pub.publish(&set_start_plate_msg);
 }
 
-void RosApi::pub_send_start(){
+void RosApi::pub_send_start(void){
     send_start_pub.publish(&start_msg);
 }

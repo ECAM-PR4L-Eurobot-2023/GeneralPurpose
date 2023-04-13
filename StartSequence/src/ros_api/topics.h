@@ -24,5 +24,6 @@
 #define TOPIC_START                 "/robot/start"
 #define TOPIC_OPEN_DOOR             "/robot/door/open"
 #define TOPIC_CLOSE_DOOR            "/robot/door/close"
+#define TOPIC_DISGUISE              "/robot/disguise"
 
 #endif /* TOPIC_H */

@@ -13,17 +13,16 @@
 
 #include "src/screen.h"
 
-#define potar 36
+#define DISGUISE_TIME 1500 //placeholder
 
-#define startCord 32
-
-#define SERVO_RIGHT_PIN 25  // placeholder fermer = 90 ouvert = 0
-#define SERVO_LEFT_PIN 33 // placeholder fermer = 0 ouvert = 90
-#define SERVO_DOOR 1 // placeholder
-
-#define FAN_PIN 23 // placeholder
-
+#define potar 14
+#define startCord 27
+#define SERVO_RIGHT_PIN 25 //  fermer = 90 ouvert = 0
+#define SERVO_LEFT_PIN 33 // fermer = 0 ouvert = 90
+#define SERVO_DOOR 32 // placeholder
+#define FAN_PIN 23 
 #define sendButtonPin 26
+#define DISGUISE_PIN 16
 
 Servo servoLeft;
 Servo servoRight;
@@ -38,15 +37,24 @@ int count = 0;
 int prevCount = 0;
 boolean drawn = false;
 bool first = true;
+bool disguising = false;
+unsigned long disguiseStart = 0;
 
 StartPlateSelector startPlateSelector(potar);
 
-void closeDoor()
+void disguise(const std_msgs::Empty &msg)
+{
+  digitalWrite(DISGUISE_PIN, HIGH);
+  disguising = true;
+  disguiseStart = millis();
+}
+
+void closeDoor(const std_msgs::Empty &msg)
 {
   servoDoor.write(90);
 }
 
-void openDoor()
+void openDoor(const std_msgs::Empty &msg)
 {
   servoDoor.write(0);
 }
@@ -88,7 +96,7 @@ void startSequence()
     drawn = false;
     prevCount = count;
   }
-
+// screen.draw(count);
   if (!drawn)
   {
     screen.draw(count);
@@ -107,10 +115,11 @@ void setup(void)
   rosApi->begin();
   screen.begin();
   startPlateSelector.begin();
-  pinMode(startCord, INPUT);
+  pinMode(startCord, INPUT_PULLUP);
 
   pinMode(sendButtonPin, INPUT);
   pinMode(FAN_PIN, OUTPUT);
+  pinMode(DISGUISE_PIN, OUTPUT);
 
   servoLeft.attach(SERVO_LEFT_PIN);
   servoRight.attach(SERVO_RIGHT_PIN);
@@ -121,8 +130,8 @@ void setup(void)
   servoDoor.write(90);
 
   rosApi->run();
-  // Serial.println("Waitinggggggggg");
-  while (!digitalRead(startCord))
+  Serial.println("Waitinggggggggg");
+  while (digitalRead(startCord))
   {
     rosApi->run();
     startSequence();
@@ -131,17 +140,26 @@ void setup(void)
     {
       while (digitalRead(sendButtonPin))
       {
+        Serial.println("inloop");
         delay(10);
       }
       rosApi->pub_set_start_plate(count);
     }
   }
+  Serial.println("feur");
   rosApi->pub_send_start();
+
 }
 
 void loop(void)
 {
   rosApi->run();
+  if (disguising && millis()-disguiseStart > DISGUISE_TIME)
+  {
+    digitalWrite(DISGUISE_PIN, LOW);
+    disguising = false;
+  }
+  delay(10);
   // if(first){
   //   while(digitalRead(startCord)){
   //     rosApi->run();
