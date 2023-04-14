@@ -111,6 +111,7 @@ void setup(void)
   callbacks.on_stop_fan = turn_off_fan_callback;
   callbacks.on_open_door = openDoor;
   callbacks.on_close_door = closeDoor;
+  callbacks.on_disguise = disguise;
   rosApi = new RosApi(&callbacks);
   rosApi->begin();
   screen.begin();
