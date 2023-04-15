@@ -15,8 +15,6 @@
 
 /* Struct used to store all the callback that will be used by the subscribers */
 typedef struct {
-
-    void (*on_set_rotation)(const std_msgs::Float32&) {NULL};
     void (*on_set_distance_ticks)(const std_msgs::Int64&) {NULL};
     void (*on_set_distance_mm)(const std_msgs::Float32&) {NULL};
     void (*on_set_display_score)(const std_msgs::Int16&) {NULL};
@@ -44,7 +42,6 @@ class RosApi {
     ros::Publisher send_start_pub;
 
     // Subscribers
-    ros::Subscriber<std_msgs::Float32> set_rotation_sub;
     ros::Subscriber<std_msgs::Int64> set_distance_ticks_sub;
     ros::Subscriber<std_msgs::Float32> set_distance_mm_sub;
     ros::Subscriber<std_msgs::Int16> set_display_score_sub;

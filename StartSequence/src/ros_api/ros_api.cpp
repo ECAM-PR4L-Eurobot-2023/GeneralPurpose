@@ -6,7 +6,6 @@ RosApi::RosApi(RosApiCallbacks *callbacks, long baudrate) :
     set_start_plate_pub(TOPIC_SET_START_PLATE, &set_start_plate_msg),
     urgency_stop_pub(TOPIC_URGENCY_STOP, &urgency_stop_msg),
     send_start_pub(TOPIC_START, &start_msg),
-    set_rotation_sub(TOPIC_SET_ROTATION, callbacks->on_set_rotation),
     set_distance_ticks_sub(TOPIC_SET_DISTANCE_TICKS, callbacks->on_set_distance_ticks),
     set_distance_mm_sub(TOPIC_SET_DISTANCE_MM, callbacks->on_set_distance_mm),
     set_display_score_sub(TOPIC_SET_DISPLAY_SCORE,callbacks->on_set_display_score),
@@ -29,7 +28,6 @@ void RosApi::begin(void) {
     nh.advertise(send_start_pub);
 
     // // Subscribe
-    nh.subscribe(set_rotation_sub);
     nh.subscribe(set_distance_ticks_sub);
     nh.subscribe(set_distance_mm_sub);
     nh.subscribe(set_display_score_sub);

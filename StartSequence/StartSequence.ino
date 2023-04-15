@@ -1,10 +1,8 @@
-#include <analogWrite.h>
-#include <ESP32PWM.h>
-#include <ESP32Servo.h>
-#include <ESP32Tone.h>
+
 
 #include <Arduino.h>
 
+#include <ESP32Servo.h>
 #include "src/StartPlateSelector.h"
 
 #include "src/data/displacement.h"
