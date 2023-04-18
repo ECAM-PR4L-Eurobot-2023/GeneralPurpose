@@ -10,6 +10,7 @@
 #include "src/ros_api/topics.h"
 
 #include "src/screen.h"
+#include "src/disguise.h"
 
 #define DISGUISE_TIME 1500 //placeholder
 
@@ -20,7 +21,8 @@
 #define SERVO_DOOR 32 // placeholder
 #define FAN_PIN 23 
 #define sendButtonPin 26
-#define DISGUISE_PIN 16
+#define DISGUISE_PIN_1 16
+#define DISGUISE_PIN_2 17
 
 Servo servoLeft;
 Servo servoRight;
@@ -35,16 +37,19 @@ int count = 0;
 int prevCount = 0;
 boolean drawn = false;
 bool first = true;
-bool disguising = false;
-unsigned long disguiseStart = 0;
+
 
 StartPlateSelector startPlateSelector(potar);
+Disguise disguise(DISGUISE_PIN_1, DISGUISE_PIN_2);
 
-void disguise(const std_msgs::Empty &msg)
+void disguiseCallBack(const std_msgs::Empty &msg)
 {
-  digitalWrite(DISGUISE_PIN, HIGH);
-  disguising = true;
-  disguiseStart = millis();
+  disguise.disguise();
+}
+
+void disguiseRelease(const std_msgs::Empty &msg)
+{
+  disguise.release();
 }
 
 void closeDoor(const std_msgs::Empty &msg)
@@ -102,6 +107,7 @@ void startSequence()
   delay(10);
 }
 
+
 void setup(void)
 {
   callbacks.on_set_display_score = display_score_callback;
@@ -109,16 +115,18 @@ void setup(void)
   callbacks.on_stop_fan = turn_off_fan_callback;
   callbacks.on_open_door = openDoor;
   callbacks.on_close_door = closeDoor;
-  callbacks.on_disguise = disguise;
+  callbacks.on_disguise = disguiseCallBack;
+  callbacks.on_disguise_release = disguiseRelease;
   rosApi = new RosApi(&callbacks);
   rosApi->begin();
   screen.begin();
+  disguise.begin();
   startPlateSelector.begin();
   pinMode(startCord, INPUT_PULLUP);
 
   pinMode(sendButtonPin, INPUT);
   pinMode(FAN_PIN, OUTPUT);
-  pinMode(DISGUISE_PIN, OUTPUT);
+
 
   servoLeft.attach(SERVO_LEFT_PIN);
   servoRight.attach(SERVO_RIGHT_PIN);
@@ -129,6 +137,7 @@ void setup(void)
   servoDoor.write(90);
 
   rosApi->run();
+
   // Serial.println("Waitinggggggggg");
   // Serial.println(digitalRead(startCord));
   while (!digitalRead(startCord))
@@ -154,11 +163,7 @@ void setup(void)
 void loop(void)
 {
   rosApi->run();
-  if (disguising && millis()-disguiseStart > DISGUISE_TIME)
-  {
-    digitalWrite(DISGUISE_PIN, LOW);
-    disguising = false;
-  }
+  disguise.run();
   delay(10);
   // if(first){
   //   while(digitalRead(startCord)){

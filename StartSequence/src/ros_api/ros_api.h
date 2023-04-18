@@ -23,6 +23,7 @@ typedef struct {
     void (*on_close_door)(const std_msgs::Empty&) {NULL};
     void (*on_open_door)(const std_msgs::Empty&) {NULL};
     void (*on_disguise)(const std_msgs::Empty&) {NULL};
+    void (*on_disguise_release)(const std_msgs::Empty&) {NULL};
 } RosApiCallbacks;
 
 class RosApi {
@@ -50,6 +51,7 @@ class RosApi {
     ros::Subscriber<std_msgs::Empty> close_door_sub;
     ros::Subscriber<std_msgs::Empty> open_door_sub;
     ros::Subscriber<std_msgs::Empty> disguise_sub;
+    ros::Subscriber<std_msgs::Empty> disguise_release_sub;
 
 public:
     RosApi(RosApiCallbacks *, long=DEFAULT_BAUDRATE);
