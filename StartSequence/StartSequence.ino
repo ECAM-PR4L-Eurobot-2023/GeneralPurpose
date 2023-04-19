@@ -71,9 +71,13 @@ void turn_on_fan_callback(const std_msgs::Int16 &msg)
     servoRight.write(0);
     
   }
-  else
+  else if (msg.data == 2)
   {
     servoLeft.write(90);
+    servoRight.write(90);
+  }
+  else{
+    servoLeft.write(0);
     servoRight.write(90);
   }
   digitalWrite(FAN_PIN, HIGH);
