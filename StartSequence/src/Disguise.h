@@ -3,8 +3,8 @@
 
 #include <Arduino.h>
 
-#define Disguised 1
-#define notDisguised 0
+#define Disguised true
+#define notDisguised false
 
 class Disguise
 {
