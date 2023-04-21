@@ -26,5 +26,7 @@
 #define TOPIC_CLOSE_DOOR            "/robot/door/close"
 #define TOPIC_DISGUISE              "/robot/disguise"
 #define TOPIC_DISGUISE_RELEASE      "/robot/disguise/release"
+#define TOPIC_END                   "/end"
+
 
 #endif /* TOPIC_H */

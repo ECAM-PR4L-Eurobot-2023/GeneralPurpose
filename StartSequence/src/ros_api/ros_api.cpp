@@ -14,7 +14,8 @@ RosApi::RosApi(RosApiCallbacks *callbacks, long baudrate) :
     close_door_sub(TOPIC_CLOSE_DOOR, callbacks->on_close_door),
     open_door_sub(TOPIC_OPEN_DOOR, callbacks->on_open_door),
     disguise_sub(TOPIC_DISGUISE, callbacks->on_disguise),
-    disguise_release_sub(TOPIC_DISGUISE_RELEASE, callbacks->on_disguise_release) {}
+    disguise_release_sub(TOPIC_DISGUISE_RELEASE, callbacks->on_disguise_release),
+    end_sub(TOPIC_END,callbacks->on_end) {}
 
 
 void RosApi::begin(void) {
@@ -38,6 +39,7 @@ void RosApi::begin(void) {
     nh.subscribe(open_door_sub);
     nh.subscribe(disguise_sub);
     nh.subscribe(disguise_release_sub);
+    nh.subscribe(end_sub);
 }
 
 void RosApi::run(void) {

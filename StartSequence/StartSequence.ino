@@ -12,8 +12,6 @@
 #include "src/screen.h"
 #include "src/disguise.h"
 
-#define DISGUISE_TIME 1500 //placeholder
-
 #define potar 14
 #define startCord 27
 #define SERVO_RIGHT_PIN 25 //  fermer = 90 ouvert = 0
@@ -37,6 +35,7 @@ int count = 0;
 int prevCount = 0;
 boolean drawn = false;
 bool first = true;
+bool stop = false;
 
 
 StartPlateSelector startPlateSelector(potar);
@@ -93,6 +92,10 @@ void turn_off_fan_callback(const std_msgs::Empty &msg)
 void display_score_callback(const std_msgs::Int16 &msg)
 {
   screen.draw(msg.data);
+}
+
+void kill(const std_msgs::Empty &kill){
+  stop = true;
 }
 
 void startSequence()
@@ -166,6 +169,9 @@ void setup(void)
 
 void loop(void)
 {
+  while(stop){
+    killAll();
+  }
   rosApi->run();
   disguise.run();
   delay(10);
@@ -180,4 +186,14 @@ void loop(void)
   //   rosApi->pub_distance_reached();
   //   rosApi->pub_set_start_plate(count);
   // }
+}
+
+
+void killAll(){
+  digitalWrite(FAN_PIN, LOW);
+  servoLeft.detach();
+  servoRight.detach();
+  servoDoor.detach();
+  digitalWrite(DISGUISE_PIN_1, LOW);
+  digitalWrite(DISGUISE_PIN_2, LOW);
 }
