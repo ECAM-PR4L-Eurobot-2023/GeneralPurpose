@@ -1,6 +1,6 @@
 #include "Disguise.h"
 
-#define TIMEON 400
+#define TIMEON 5000
 
 Disguise::Disguise(int pinA, int pinB) : pinA(pinA), pinB(pinB)
 {}
@@ -16,6 +16,7 @@ void Disguise::disguise()
     digitalWrite(pinA, HIGH);
     digitalWrite(pinB, LOW);
     on = true;
+    state = Disguised;
     disguiseStart = millis();
 }
 
@@ -23,6 +24,7 @@ void Disguise::release()
 {
     digitalWrite(pinA, LOW);
     digitalWrite(pinB, HIGH);
+    state = notDisguised;
     on = true;
     disguiseStart = millis();
 }
@@ -38,5 +40,8 @@ void Disguise::run(){
     if (on && millis()-disguiseStart > TIMEON)
     {
         turnOff();
+        if (state){
+            release();
+        }
     }
 }

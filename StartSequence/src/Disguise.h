@@ -3,12 +3,16 @@
 
 #include <Arduino.h>
 
+#define Disguised 1
+#define notDisguised 0
+
 class Disguise
 {
 private:    
     int pinA, pinB;
     bool on = false;
     unsigned long disguiseStart = 0;
+    bool state = notDisguised;
 
 public:
     // Constructor
