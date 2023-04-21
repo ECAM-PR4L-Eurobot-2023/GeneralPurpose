@@ -1,6 +1,6 @@
 #include "Disguise.h"
 
-#define TIMEON 5000
+#define TIMEON 1000
 
 Disguise::Disguise(int pinA, int pinB) : pinA(pinA), pinB(pinB)
 {}

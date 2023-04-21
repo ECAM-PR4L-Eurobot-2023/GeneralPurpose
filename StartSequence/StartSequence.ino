@@ -124,6 +124,7 @@ void setup(void)
   callbacks.on_close_door = closeDoor;
   callbacks.on_disguise = disguiseCallBack;
   callbacks.on_disguise_release = disguiseRelease;
+  callbacks.on_end = kill;
   rosApi = new RosApi(&callbacks);
   rosApi->begin();
   screen.begin();
@@ -164,7 +165,6 @@ void setup(void)
   }
   // Serial.println("feur");
   rosApi->pub_send_start();
-
 }
 
 void loop(void)
@@ -175,6 +175,8 @@ void loop(void)
   rosApi->run();
   disguise.run();
   delay(10);
+
+
   // if(first){
   //   while(digitalRead(startCord)){
   //     rosApi->run();
